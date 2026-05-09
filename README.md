@@ -35,7 +35,9 @@ export XPDE_BRANCH="main"
 curl -fsSL https://raw.githubusercontent.com/PAT0036/xpde/main/install.sh | bash
 ```
 
-Flags: `--dir PATH`, `--repo URL`, `--no-rust`, `--no-js`, `--help`.
+Flags: `--dir PATH`, `--repo URL`, `--no-rust`, `--no-js`, `--no-system-deps`, `--help`.
+
+On **Debian/Ubuntu**, the installer runs `apt` (via `sudo` if needed) to install **`build-essential`**, **`pkg-config`**, and **`libssl-dev`** when the C linker is missing (fixes `linker 'cc' not found` from Cargo). Set **`XPDE_NO_SYSTEM_DEPS=1`** or **`--no-system-deps`** to skip that step.
 
 **Platforms:** Linux and macOS (Bash). On Windows, use WSL or Git Bash.
 

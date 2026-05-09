@@ -6,11 +6,14 @@
 #   ./install.sh
 #
 # Environment (optional):
-#   XPDE_REPO   Git URL (default: https://github.com/PAT0036/xpde.git)
-#   XPDE_DIR    Install/clone directory (default: $HOME/xpde)
-#   XPDE_BRANCH Branch to checkout (default: main)
+#   XPDE_REPO              Git URL (default: https://github.com/PAT0036/xpde.git)
+#   XPDE_DIR               Install/clone directory (default: $HOME/xpde)
+#   XPDE_BRANCH            Branch to checkout (default: main)
+#   XPDE_NO_SYSTEM_DEPS=1 Skip apt installs (build-essential, etc.)
 
 set -euo pipefail
+
+NO_SYSTEM_DEPS="${XPDE_NO_SYSTEM_DEPS:-0}"
 
 DEFAULT_REPO="${XPDE_REPO:-https://github.com/PAT0036/xpde.git}"
 DEFAULT_DIR="${XPDE_DIR:-$HOME/xpde}"
@@ -32,12 +35,13 @@ fi
 
 usage() {
   echo "Usage: install.sh [options]"
-  echo "  Environment: XPDE_REPO, XPDE_DIR, XPDE_BRANCH"
+  echo "  Environment: XPDE_REPO, XPDE_DIR, XPDE_BRANCH, XPDE_NO_SYSTEM_DEPS"
   echo "  Flags: --dir PATH   Clone/update target (overrides XPDE_DIR)"
   echo "        --repo URL   Git remote (overrides XPDE_REPO)"
-  echo "        --no-rust    Skip rustup / cargo build"
-  echo "        --no-js      Skip bun install"
-  echo "        -h, --help   This help"
+  echo "        --no-rust        Skip rustup / cargo build"
+  echo "        --no-js          Skip bun install"
+  echo "        --no-system-deps Skip apt install of build-essential (Debian/Ubuntu)"
+  echo "        -h, --help       This help"
 }
 
 NO_RUST=0
@@ -49,6 +53,7 @@ while [[ $# -gt 0 ]]; do
     --repo) DEFAULT_REPO="${2:-}"; shift 2 ;;
     --no-rust) NO_RUST=1; shift ;;
     --no-js) NO_JS=1; shift ;;
+    --no-system-deps) NO_SYSTEM_DEPS=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *)
       echo "Unknown option: $1" >&2
@@ -74,6 +79,51 @@ die() {
 ensure_git_curl() {
   need_cmd git || die "install git first (e.g. sudo apt install git)"
   need_cmd curl || die "install curl first (e.g. sudo apt install curl)"
+}
+
+has_c_linker() {
+  (command -v cc >/dev/null 2>&1 && cc --version >/dev/null 2>&1) ||
+    (command -v gcc >/dev/null 2>&1 && gcc --version >/dev/null 2>&1)
+}
+
+is_apt_distro() {
+  [[ -r /etc/os-release ]] || return 1
+  # shellcheck source=/dev/null
+  . /etc/os-release
+  case "${ID:-}" in
+    debian|ubuntu|pop|linuxmint|raspbian) return 0 ;;
+  esac
+  for tok in ${ID_LIKE:-}; do
+    [[ "$tok" == "debian" ]] && return 0
+    [[ "$tok" == "ubuntu" ]] && return 0
+  done
+  return 1
+}
+
+# Rust (and some native deps) need a working C toolchain (linker 'cc').
+ensure_c_build_tools() {
+  [[ "${NO_SYSTEM_DEPS}" -eq 0 ]] || return 0
+  [[ "${NO_RUST}" -eq 0 ]] || return 0
+  has_c_linker && return 0
+
+  if is_apt_distro; then
+    echo "Installing C build tools for Rust (build-essential, pkg-config, libssl-dev)…"
+    if [[ "${EUID:-1}" -eq 0 ]]; then
+      apt-get update -qq
+      DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        build-essential pkg-config libssl-dev
+    elif need_cmd sudo; then
+      sudo apt-get update -qq
+      DEBIAN_FRONTEND=noninteractive sudo -E apt-get install -y --no-install-recommends \
+        build-essential pkg-config libssl-dev
+    else
+      die "No 'sudo' and not root — install manually: sudo apt install build-essential pkg-config libssl-dev"
+    fi
+    has_c_linker || die "C linker still missing after apt install"
+    return 0
+  fi
+
+  die "Rust needs a C linker ('cc'/gcc). On Debian/Ubuntu: sudo apt install build-essential pkg-config libssl-dev"
 }
 
 ensure_bun() {
@@ -120,6 +170,7 @@ clone_or_update() {
 
 main() {
   ensure_git_curl
+  ensure_c_build_tools
 
   if [[ "${NO_JS}" -eq 0 ]]; then
     ensure_bun
