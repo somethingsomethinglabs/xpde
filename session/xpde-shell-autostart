@@ -1,0 +1,4 @@
+#!/bin/sh
+swaybg -i /usr/share/backgrounds/xpde/bliss.jpg -m fill &
+waybar &
+xpde-shelld &

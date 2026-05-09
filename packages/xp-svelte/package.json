@@ -1,0 +1,10 @@
+{
+  "name": "@xpde/xp-svelte",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/lib/index.ts",
+  "scripts": {
+    "build": "echo xp-svelte build",
+    "lint": "eslint . --max-warnings 0"
+  }
+}

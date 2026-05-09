@@ -1,0 +1,8 @@
+session/xpde-session usr/bin/
+session/xpde-shell-autostart usr/bin/
+session/xpde.desktop usr/share/wayland-sessions/
+session/labwc/rc.xml usr/share/xpde/labwc/
+session/labwc/autostart usr/share/xpde/labwc/
+session/labwc/environment usr/share/xpde/labwc/
+session/labwc/menu.xml usr/share/xpde/labwc/
+session/search-providers/*.toml usr/share/xpde/search-providers/

@@ -1,0 +1,4 @@
+id = "mdn"
+name = "MDN"
+keyword = "mdn"
+template = "https://developer.mozilla.org/en-US/search?q={query}"

@@ -1,0 +1,4 @@
+id = "wikipedia"
+name = "Wikipedia"
+keyword = "wiki"
+template = "https://en.wikipedia.org/w/index.php?search={query}"

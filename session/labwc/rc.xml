@@ -1,0 +1,14 @@
+<labwc_config>
+  <keyboard>
+    <keybind key="W-r">
+      <action name="Execute">
+        <command>xpde-run</command>
+      </action>
+    </keybind>
+    <keybind key="W-space">
+      <action name="Execute">
+        <command>xpde-start</command>
+      </action>
+    </keybind>
+  </keyboard>
+</labwc_config>

@@ -1,0 +1,9 @@
+[Unit]
+Description=XPDE shell daemon
+
+[Service]
+ExecStart=/usr/bin/xpde-shelld
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

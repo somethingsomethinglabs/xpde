@@ -1,0 +1,11 @@
+node_modules/
+dist/
+build/
+.svelte-kit/
+target/
+*.deb
+*.changes
+*.buildinfo
+.DS_Store
+*.log
+pnpm-lock.yaml

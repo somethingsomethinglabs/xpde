@@ -1,0 +1,20 @@
+[workspace]
+members = [
+  "crates/xpde-ipc",
+  "crates/xpde-desktop",
+  "crates/xpde-layer",
+  "crates/xpde-power",
+  "crates/xpde-net",
+  "crates/xpde-audio",
+  "crates/xpde-bt",
+  "crates/xpde-open-url",
+  "crates/xpde-shelld",
+  "crates/xpde-webview",
+]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+license = "MIT"
+version = "0.1.0"
+authors = ["XPDE Contributors"]

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=XPDE
+Comment=XPDE Debian XP Workbench Session
+Exec=/usr/bin/xpde-session
+Type=Application
+DesktopNames=xpde

@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+export XDG_CURRENT_DESKTOP="xpde"
+export XDG_SESSION_DESKTOP="xpde"
+export XDG_SESSION_TYPE="wayland"
+
+LABWC_CONFIG="${HOME}/.config/labwc"
+mkdir -p "${LABWC_CONFIG}"
+
+exec labwc -C "${LABWC_CONFIG}" -s /usr/bin/xpde-shell-autostart

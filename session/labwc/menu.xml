@@ -1,0 +1,12 @@
+<openbox_menu xmlns="http://openbox.org/">
+  <menu id="root-menu" label="XPDE">
+    <item label="Run">
+      <action name="Execute">
+        <command>xpde-run</command>
+      </action>
+    </item>
+    <item label="Logout">
+      <action name="Exit" />
+    </item>
+  </menu>
+</openbox_menu>

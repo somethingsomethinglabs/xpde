@@ -1,0 +1,17 @@
+[package]
+name = "xpde-webview"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "xpde-webview"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+dirs = "5"
+open = "5"
+toml = "0.8"
+xpde-ipc = { path = "../xpde-ipc" }

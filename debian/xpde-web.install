@@ -1,0 +1,2 @@
+target/release/xpde-open-url usr/bin/
+target/release/xpde-webview usr/bin/

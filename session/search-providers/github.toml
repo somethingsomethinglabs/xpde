@@ -1,0 +1,4 @@
+id = "github"
+name = "GitHub"
+keyword = "gh"
+template = "https://github.com/search?q={query}&type=repositories"

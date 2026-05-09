@@ -1,0 +1,10 @@
+{
+  "name": "@xpde/tokens",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/tokens.css",
+  "scripts": {
+    "build": "echo tokens build",
+    "lint": "eslint . --max-warnings 0 --no-error-on-unmatched-pattern"
+  }
+}

@@ -1,0 +1,36 @@
+Source: xpde
+Section: x11
+Priority: optional
+Maintainer: XPDE Team <xpde@example.invalid>
+Standards-Version: 4.6.2
+Build-Depends: debhelper-compat (= 13)
+
+Package: xpde
+Architecture: all
+Depends: xpde-shell, xpde-session, xpde-themes, xpde-web
+Description: XPDE meta-package
+ XPDE Debian XP Workbench meta-package.
+
+Package: xpde-shell
+Architecture: any
+Depends: ${misc:Depends}
+Description: XPDE shell binaries
+ Tauri apps and Rust shell services.
+
+Package: xpde-session
+Architecture: all
+Depends: ${misc:Depends}, labwc, swaybg, waybar
+Description: XPDE session files
+ Wayland session entry and labwc defaults.
+
+Package: xpde-themes
+Architecture: all
+Depends: ${misc:Depends}
+Description: XPDE themes
+ XP.css wrappers and token themes.
+
+Package: xpde-web
+Architecture: any
+Depends: ${misc:Depends}
+Description: XPDE web subsystem
+ Pinned web app runtime and providers.
