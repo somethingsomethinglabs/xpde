@@ -121,9 +121,10 @@ fn parse_desktop_file(path: &Path) -> Option<AppEntry> {
     }
 
     let id = path.file_name()?.to_str()?.to_string();
+    let display_name = name.unwrap_or_else(|| id.clone());
     Some(AppEntry {
         id,
-        name: name.unwrap_or_else(|| id.clone()),
+        name: display_name,
         exec: exec.unwrap_or_default(),
     })
 }
