@@ -2,14 +2,14 @@
 
 ## Build
 
-- `pnpm install`
+- `bun install`
 - `cargo build --workspace`
-- `pnpm build`
+- `bun run build` (workspace packages under `packages/`; apps use `bun run build:apps` once Vite entry exists)
 
 ## Lint
 
-- `pnpm lint` — ESLint (JS/TS/Svelte) + `cargo fmt` / `cargo clippy`
-- `pnpm lint:fix` — auto-fix ESLint + format Rust
+- `bun run lint` — ESLint (JS/TS/Svelte) + `cargo fmt` / `cargo clippy`
+- `bun run lint:fix` — auto-fix ESLint + format Rust
 
 ## Web objects / D-Bus
 

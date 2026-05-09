@@ -6,25 +6,26 @@ and Rust services for Linux integration and web-object orchestration.
 
 ## Workspaces
 
-- JavaScript/TypeScript packages are managed with `pnpm` workspaces.
-- Rust crates are managed with a Cargo workspace.
+- JavaScript/TypeScript packages use **Bun** workspaces (`apps/*`, `packages/*`).
+- Rust crates use a Cargo workspace.
 
 ## Quick start
 
-1. Install Rust stable and Node.js 20+.
-2. Run `pnpm install` (Corepack: `corepack enable`). Workspace packages use `workspace:*`; **pnpm is required** for full installs. For ESLint-only at the root without workspaces, `npm install` in the repo root still installs shared dev tools listed in the root `package.json`.
+1. Install [Bun](https://bun.sh/) and Rust stable.
+2. Run `bun install` at the repo root (links `workspace:*` packages).
 3. Run `cargo build --workspace`.
-4. Run one app in dev mode, for example `pnpm --filter @xpde/control dev`.
+4. Run `bun run build` (packages only until each app has a full Vite/SvelteKit scaffold).
+5. Run an app in dev mode, for example `bun run dev:control`.
+
+When app stubs gain `index.html` / SvelteKit config, use `bun run build:apps` for all `apps/*` production builds.
 
 ## Linting
 
-- **JavaScript / TypeScript / Svelte**: [ESLint](https://eslint.org/) 9 flat config with [`typescript-eslint`](https://typescript-eslint.io/) and [`eslint-plugin-svelte`](https://sveltejs.github.io/eslint-plugin-svelte/) — the usual, best-supported stack for SvelteKit-style projects (Biome’s Svelte support is still catching up).
-- **Rust**: `cargo fmt --check` and `cargo clippy --workspace --all-targets -- -D warnings`.
+- **JavaScript / TypeScript / Svelte**: ESLint 9 + typescript-eslint + eslint-plugin-svelte.
+- **Rust**: `cargo fmt --check` and `cargo clippy`.
 
 From the repo root:
 
 ```bash
-pnpm lint
-# or
-npm run lint
+bun run lint
 ```

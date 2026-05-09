@@ -9,3 +9,4 @@ target/
 .DS_Store
 *.log
 pnpm-lock.yaml
+package-lock.json
